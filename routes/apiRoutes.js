@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const router = require('express').Router();
+const { v4: uuidv4 } = require('uuid');
 
 router.get('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', function (err, data) {
@@ -12,6 +13,7 @@ router.get('/api/notes', (req, res) => {
 
 router.post('/api/notes', (req, res) => {
     const newNotes = req.body;
+    newNotes.id = uuidv4();
     fs.readFile('./db/db.json', function (err, data) {
         if (err) throw err;
         const notes = JSON.parse(data);
